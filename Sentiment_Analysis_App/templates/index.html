@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 Sentiment Analysis</h1>
+            <p>Enter any sentence — I'll tell you if it's positive, negative, or neutral</p>
+        </header>
+
+        <div class="content">
+            <form method="POST">
+                <textarea name="text" class="text-input" placeholder="Type something here... e.g., I love this weather!" required></textarea>
+                <br>
+                <button type="submit">🔍 Analyze Sentiment</button>
+            </form>
+
+            {% if result %}
+            <div class="result">
+                <h3>📝 Your text:</h3>
+                <div class="input-text">"{{ result.text }}"</div>
+                
+                <h3>😊 Sentiment: 
+                    <span class="
+                        {% if result.sentiment == 'Positive 😊' %}sentiment-positive
+                        {% elif result.sentiment == 'Negative 😞' %}sentiment-negative
+                        {% else %}sentiment-neutral{% endif %}
+                    ">{{ result.sentiment }}</span>
+                </h3>
+                
+                <div class="score-box">
+                    <strong>📊 Polarity score:</strong> {{ result.polarity }}
+                    <span style="font-size:0.85rem;">(from -1 = very negative, to +1 = very positive)</span>
+                </div>
+                
+                <div class="score-box">
+                    <strong>💭 Subjectivity score:</strong> {{ result.subjectivity }}
+                    <span style="font-size:0.85rem;">(0 = very objective/factual, 1 = very subjective/opinionated)</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <footer>
+            Built with Flask & TextBlob | Sentiment Analysis Internship Task
+        </footer>
+    </div>
+</body>
+</html>
